@@ -233,6 +233,21 @@ class _MyCustomFormState extends State<Login> {
               child: Text('Login', style: TextStyle(fontSize: 20)),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child:RaisedButton(
+            
+            onPressed: (){
+              Navigator.pushNamed(context, '/cadastro');
+            },
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Text('Ainda não tem uma conta? Clique aqui para registrar-se', style: TextStyle(fontSize: 10)),
+            ),
+          ),
+          )       
+
         ],
       ),
       floatingActionButton: FloatingActionButton(

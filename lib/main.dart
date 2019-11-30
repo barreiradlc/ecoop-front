@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 // telas
 import  './telas/Home.dart';
 import  './telas/Login.dart';
+import  './telas/Cadastro.dart';
 import  './telas/Camera.dart';
 
 
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
 
   var inicio = new Home();
   var login = new Login();
+  var cadastro = new Cadastro();
   var camera = new Camera();
 
   @override
@@ -51,6 +53,7 @@ class MyApp extends StatelessWidget {
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => login,
+        '/cadastro': (context) => cadastro,
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/home': (context) => inicio,
         '/camera': (context) => camera,
