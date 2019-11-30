@@ -149,32 +149,34 @@ class _MyCustomFormState extends State<Login> {
   final myController2 = TextEditingController();
 
   Future<String> getReq() async {
-    var url = 'https://agencia-provisorio.000webhostapp.com/';
-    var endpoint = 'wp-json/jwt-auth/v1/token';
+    // var url = 'https://agencia-provisorio.000webhostapp.com/';
+    // var endpoint = 'wp-json/jwt-auth/v1/token';
 
-    http.Response response = await http.post(Uri.encodeFull(url + endpoint),
-        body: {'username': 'WebDesign', 'password': 'web!gestao'});
+    // http.Response response = await http.post(Uri.encodeFull(url + endpoint),
+    //     body: {'username': 'WebDesign', 'password': 'web!gestao'});
     const bool kIsWeb = identical(0, 0.0);
 
-    var token = jsonDecode(response.body);
+    // var token = jsonDecode(response.body);
 
-    print(token);
+    // print(token);
     
-    print('nãp mobile');
+    
     if (kIsWeb) {
-      web.window.localStorage['mypref'] = token['token'];
+      // web.window.localStorage['mypref'] = token['token'];
       // Navigator.pushNamed(context, '/home');
       print('não mobile');
-    } 
+    } else {
+      print ('é mobile xuxu');
+    }
     
     // web.window.localStorage['mypref'] = token['token'];
       
-    if (token['token'] != null) {
-      print('login');
-      Navigator.pushNamed(context, '/home');
-    } else {
-      print('tratar erro');
-    }
+    // if (token['token'] != null) {
+    //   print('login');
+    //   Navigator.pushNamed(context, '/home');
+    // } else {
+    //   print('tratar erro');
+    // }
 
     // if (!Platform.isIOS && !Platform.isAndroid) {
     // } 
