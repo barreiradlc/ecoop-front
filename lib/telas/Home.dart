@@ -4,19 +4,28 @@ import './Tabs.dart';
 
 import 'package:universal_html/prefer_universal/html.dart' as web;
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'dart:math' as math;
 void main() => runApp(Home());
+
 class Home extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        // appBar: AppBar(title: Text('E_coop')),
-        body: CollapsingList(),
+        appBar: AppBar(
+          title: Text('E_cartio')),
+        body: HomeState(),
       ),
     );
   }
 }
+
+class HomeState extends StatefulWidget{
+  @override
+  CollapsingList createState() => CollapsingList();
+}
+
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({
     @required this.minHeight,
@@ -45,19 +54,22 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         child != oldDelegate.child;
   }
 }
-class CollapsingList extends StatelessWidget {
+class CollapsingList extends State<HomeState> {
+  
+  String jwt = 'testeJWT';
+  String username = '';
+
   SliverPersistentHeader makeHeader(String headerText) {
     return SliverPersistentHeader(
       pinned: true,
       delegate: _SliverAppBarDelegate(
-        minHeight: 20,
-        maxHeight: 200.0,
-        child: Container(
-          color: Colors.white, 
+        minHeight: 0,
+        maxHeight: 80.0,
+        
           child: Center(
             child:Text(headerText)
           )
-        ),
+        
       ),
     );
   }
@@ -66,7 +78,7 @@ class CollapsingList extends StatelessWidget {
       pinned: true,
       delegate: _SliverAppBarDelegate(
         minHeight: 0,
-        maxHeight: 200.0,
+        maxHeight: 40.0,
         child: Center(
           child:RaisedButton(
               onPressed: () {
@@ -80,15 +92,36 @@ class CollapsingList extends StatelessWidget {
   }
 
   var myPref = web.window.localStorage['mypref'];
+  
 
   @override
   Widget build(BuildContext context) {
+    
+
+
+    Future<String> _getJWT() async {
+      final authJwt = await SharedPreferences.getInstance();  
+      String jwt = authJwt.getString("jwt");
+      String username = authJwt.getString("username");
+      setState(() {
+        this.jwt = jwt;
+        this.username = username;
+      });
+      // this.jwt = jwt2;
+      return jwt;
+    }
+
+    _getJWT();
+
     return CustomScrollView(
       slivers: <Widget>[
         // makeHeader(myPref),
-        makeHeader(' 22 itens este mês'),
-        makeHeader('Produziste 43 artes com materias reciclados'),
-        makeHeader2('Camera'),
+        makeHeader(
+          'Seja bem vindo(a): ' + this.username
+        ),
+        
+        // makeHeader2('Camera'),
+
         SliverGrid.count(
           crossAxisCount: 1,
           children: [

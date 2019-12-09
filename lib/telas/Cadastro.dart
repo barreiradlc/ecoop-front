@@ -6,6 +6,9 @@ import 'package:flutter/foundation.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -32,7 +35,13 @@ class _MyCustomFormState extends State<Cadastro> {
   final senhaConfirmaCred = TextEditingController();
 
   Future<String> cadastroReq() async {
+    
+    // cloud
     var url = 'https://ae-teste.herokuapp.com';
+
+    // local
+    // var url = 'http://localhost:3000';
+    
     var endpoint = '/users';
     if (senhaCred.text == senhaConfirmaCred.text) {
       print('req');
@@ -46,6 +55,8 @@ class _MyCustomFormState extends State<Cadastro> {
       var res = jsonDecode(response.body);
 
       if (res['errors'] == null) {
+        SharedPreferences jwt = await SharedPreferences.getInstance();
+
         print('sucesso');
         http.Response res2 = await http.post(Uri.encodeFull(url + endpoint),
             body: {'email': emailCred.text, 'password': senhaCred.text});
@@ -54,7 +65,9 @@ class _MyCustomFormState extends State<Cadastro> {
         if (kIsWeb) {
           web.window.localStorage['mypref'] = login['token'];
           print('não mobile');
-        } else {
+        } else {  
+          await jwt.setString('username', usuarioCred.text);
+          await jwt.setString('jwt', login['token']);
           print("mobile");
         }
 
@@ -110,7 +123,7 @@ class _MyCustomFormState extends State<Cadastro> {
           Padding(
             padding: const EdgeInsets.all(32.0),
             child: Text(
-              "ART & ECO",
+              "ECARTO",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42),
             ),
           ),
